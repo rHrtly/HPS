@@ -17,7 +17,7 @@ system("hostname")
 date()
 sessionInfo()
 
-loc <- "C:/Users/rh2845/Documents/Data/Pulse/"
+loc <- "C:/Users/rh2845/Documents/GitHub/HPS/"
 setwd(loc)
 
 # Libraries ####################################################################
@@ -34,7 +34,8 @@ for (w in W) {
   y <- 2020 + (w > 21) + (w > 40) + (w > 52)  # years by survey week 2020--
   a <- ifelse(w %in% 13:18, "_updated_12.2020", "")  # updates for weeks 13-18
   ww <- paste0(ifelse(w < 10, "0", ""), w)  # single-digit naming convention
-  file <- paste0("pulse", y, "_data.dictionary_CSV_", ww, a, ".xlsx")
+  file <- paste0("Dictionaries/pulse", y, "_data.dictionary_CSV_", ww, a,
+                 ".xlsx")
   
   # Read metadata from file ####################################################
   
@@ -77,12 +78,12 @@ for (w in W) {
   for (x in names(dictionary[[paste0("w", w)]])) {
     dictionary[[paste0("w", w)]][x] <- sapply(
       dictionary[[paste0("w", w)]][x], function(y)
-        gsub("'", "'",
-             gsub("'", "'",
-                  gsub(".", "...",
-                       gsub("-", "-",
-                            gsub(""", '"',
-                                 gsub(""", '"',
+        gsub("\u2018", "'",
+             gsub("\u2019", "'",
+                  gsub("\u201c", '"',
+                       gsub("\u201d", '"',
+                            gsub("\u2026", "...",
+                                 gsub("\u2013", "-",
                                       gsub("<.m>", "-88",
                                            y
                                       )
